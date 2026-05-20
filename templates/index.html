@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>House Price Prediction</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            background:linear-gradient(135deg,#1e3c72,#2a5298,#6dd5ed);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding:30px;
+        }
+
+        .container{
+            width:100%;
+            max-width:950px;
+            background:rgba(255,255,255,0.12);
+            border-radius:25px;
+            backdrop-filter:blur(18px);
+            padding:40px;
+            box-shadow:0 8px 32px rgba(0,0,0,0.3);
+            border:1px solid rgba(255,255,255,0.2);
+        }
+
+        .title{
+            text-align:center;
+            color:white;
+            margin-bottom:35px;
+        }
+
+        .title h1{
+            font-size:42px;
+            font-weight:700;
+            margin-bottom:10px;
+        }
+
+        .title p{
+            color:#e0e0e0;
+            font-size:16px;
+        }
+
+        form{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:25px;
+        }
+
+        .input-box{
+            display:flex;
+            flex-direction:column;
+        }
+
+        .input-box label{
+            color:white;
+            margin-bottom:8px;
+            font-size:15px;
+            font-weight:500;
+        }
+
+        .input-box input,
+        .input-box select{
+            padding:15px;
+            border:none;
+            border-radius:14px;
+            background:rgba(255,255,255,0.2);
+            color:white;
+            font-size:15px;
+            outline:none;
+            transition:0.3s;
+        }
+
+        .input-box input::placeholder{
+            color:#f1f1f1;
+        }
+
+        .input-box input:focus,
+        .input-box select:focus{
+            background:rgba(255,255,255,0.3);
+            transform:scale(1.02);
+        }
+
+        select option{
+            color:black;
+        }
+
+        .btn-box{
+            grid-column:span 2;
+            text-align:center;
+            margin-top:10px;
+        }
+
+        button{
+            padding:16px 45px;
+            border:none;
+            border-radius:50px;
+            background:white;
+            color:#1e3c72;
+            font-size:17px;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.4s;
+            box-shadow:0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        button:hover{
+            transform:translateY(-3px);
+            background:#1e3c72;
+            color:white;
+        }
+
+        .prediction{
+            margin-top:35px;
+            background:rgba(255,255,255,0.15);
+            padding:20px;
+            border-radius:18px;
+            text-align:center;
+            color:white;
+            font-size:28px;
+            font-weight:700;
+            box-shadow:0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        @media(max-width:768px){
+
+            form{
+                grid-template-columns:1fr;
+            }
+
+            .btn-box{
+                grid-column:span 1;
+            }
+
+            .title h1{
+                font-size:32px;
+            }
+
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="title">
+        <h1>🏠 House Price Prediction</h1>
+        <p>AI Powered California Housing Prediction System</p>
+    </div>
+
+    <form action="/predict" method="POST">
+
+        <div class="input-box">
+            <label>Ocean Proximity</label>
+            <select name="ocean_proximity" required>
+                <option value="INLAND">INLAND</option>
+                <option value="NEAR BAY">NEAR BAY</option>
+                <option value="NEAR OCEAN">NEAR OCEAN</option>
+                <option value="<1H OCEAN"><1H OCEAN</option>
+                <option value="ISLAND">ISLAND</option>
+            </select>
+        </div>
+
+        <div class="input-box">
+            <label>Population</label>
+            <input type="number" name="population" placeholder="Enter population" required>
+        </div>
+
+        <div class="input-box">
+            <label>Housing Median Age</label>
+            <input type="number" name="housing_median_age" placeholder="Enter age" required>
+        </div>
+
+        <div class="input-box">
+            <label>Total Bedrooms</label>
+            <input type="number" name="total_bedrooms" placeholder="Enter bedrooms" required>
+        </div>
+
+        <div class="input-box">
+            <label>Total Rooms</label>
+            <input type="number" name="total_rooms" placeholder="Enter rooms" required>
+        </div>
+
+        <div class="input-box">
+            <label>Latitude</label>
+            <input type="number" step="any" name="latitude" placeholder="Enter latitude" required>
+        </div>
+
+        <div class="input-box">
+            <label>Longitude</label>
+            <input type="number" step="any" name="longitude" placeholder="Enter longitude" required>
+        </div>
+
+        <div class="input-box">
+            <label>Households</label>
+            <input type="number" name="households" placeholder="Enter households" required>
+        </div>
+
+        <div class="btn-box">
+            <button type="submit">Predict Price</button>
+        </div>
+
+    </form>
+
+    {% if prediction_text %}
+        <div class="prediction">
+            {{ prediction_text }}
+        </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
